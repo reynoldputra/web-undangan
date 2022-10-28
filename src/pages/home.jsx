@@ -28,11 +28,12 @@ export default function Home () {
             <div className='bg-[#F3A451] h-[250px] sm:h-[150px] md:h-[100px] relative z-0' >
                 <img className='absolute top-[200px] sm:top-[50px] md:top-0 z-0 lg:top-[64px] xl:-top-10' src={bg_light} alt="" />
             </div>
-            <img className='w-[200px] z-20 absolute bottom-[100px] inset-x-0 mx-auto lg:right-[75px] lg:inset-x-auto lg:-bottom-10 lg:w-[300px] xl:right-[100px]' src={photo} alt="" />
             <img className='absolute z-0 top-[225px] md:top-[175px] lg:hidden' src={gunungan_kiri} alt="" />
             <img className='absolute z-10 top-[225px] md:top-[175px] right-0 lg:top-[120px] lg:w-[120px]' src={gunungan_kanan} alt="" />
-
+            
+            <img className='w-[200px] z-20 absolute bottom-[18%] inset-x-0 mx-auto lg:right-[75px] lg:inset-x-auto lg:-bottom-10 lg:w-[300px] xl:right-[100px]' src={photo} alt="" />
             <img className='w-screen top-[60%] md:top-[50%] absolute z-20 lg:top-[75%] xl:top-[65%]' src={bg_dark} alt="" />
+
             <img className='absolute z-20 bottom-[20px] lg:hidden' src={motif2_left} alt="" />
             <img className='absolute z-20 right-0 bottom-[20px] lg:hidden' src={motif2_right} alt="" />
 
