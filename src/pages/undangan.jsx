@@ -13,19 +13,24 @@ import gunungan_kanan from '../asset/gun-lg-r.svg'
 import back from '../asset/arrow_left.svg'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react'
-
+import { Img} from 'react-image'
+import ClipLoader from "react-spinners/ClipLoader";
+import audio from '../asset/audio.mpeg'
 
 export default function Undangan () {
-    const locale = 'en';
+
     const navigate = useNavigate();
     const [today, setDate] = useState(new Date()); 
-    const [res, setRes] = useState()
     const theDate = new Date(2022, 10, 5, 16)
+    const [loading, setLoading] = useState(true);
+    const [play, setPlay] = useState(false)
     
+
     const navigateHome = () => {
         // 👇️ navigate to /
         navigate('/');
     };
+    
     const secondsToDhms = (seconds) => {
         seconds = Number(seconds);
         var d = Math.floor(seconds / (3600*24));
@@ -39,10 +44,24 @@ export default function Undangan () {
             m,
             s
         } 
-        }
+    }
+
+    const BackgroundAudio = new Audio(audio);
+    BackgroundAudio.loop = true;
 
     useEffect(() => {
+        console.log(play);
+      }, [play])
 
+    function audioHandle() {
+        const modal = document.getElementById("popup-modal")
+        modal.classList.add('hidden')
+        BackgroundAudio.play();
+        // setPlay(true)
+    }
+
+
+    useEffect(() => {
         const timer = setInterval(() => { 
             setDate(new Date())
         }, 60 * 1000);
@@ -54,6 +73,18 @@ export default function Undangan () {
     
     return (
         <div className="w-screen bg-[#2B1C13] overflow-hidden">
+        <div id="popup-modal" tabIndex="-1" className="bg-[#fbc387] bg-opacity-90 overflow-y-auto overflow-x-hidden h-screen fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center" aria-hidden="true">
+            <div className="relative mx-auto w-full max-w-md h-full pt-[10%]">
+                <div className="relative m-auto bg-white rounded-lg shadow dark:bg-[#2B1C13]">
+                    <div className="py-[70px] text-center">
+                        <h3 className="mb-5 text-lg font-normal text-[#2B1C13] dark:text-[#F3A451]">Welcome to our webiste</h3>
+                        <button onClick={audioHandle} data-modal-toggle="popup-modal" type="button" className="text-[#2B1C13] bg-[#F3A451] hover:bg-[#c87d2e] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
             <div className='flex justify-between relative'>
                 <img className='w-[100px] pt-[50px] md:pt-[100px] md:w-[120px] lg:w-[200px]' src={motif1_left} />
                 <img className='w-[150px] pt-[5px] md:w-[170px] lg:w-[300px]' src={motif1_right} />
@@ -65,7 +96,12 @@ export default function Undangan () {
             </div>
       
             <div className='relative w-full h-[500px] overflow-hidden md:h-[550px] lg:h-[600px]'>
-                <img className='inset-x-0 mx-auto h-[300px] z-10 absolute sm:h-[350px] md:mt-6 lg:h-[400px]' src={photo_real} alt="" />
+                <Img className='inset-x-0 mx-auto h-[300px] z-10 absolute sm:h-[350px] md:mt-6 lg:h-[400px]' src={photo_real} alt="" loader={<ClipLoader
+                    loading={loading}
+                    size={50}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />} />
                 <img className='absolute w-screen z-0 top-[210px]' src={bg_md2} alt="" />
                 <div className='absolute top-[250px] z-20' >
                     <div className='relative'>
@@ -78,7 +114,7 @@ export default function Undangan () {
                     </div>
                 </div>
                 <div className='absolute z-40 bottom-1 mx-auto inset-x-0'>
-                    <p className='font-poppins text-white px-[30px] text-sm text-center'>Acara ini akan dilaksnakan pada tanggal dan di lokasi berikut</p>
+                    <p className='font-poppins text-white px-[30px] text-sm text-center'>Acara ini akan dilaksanakan pada tanggal dan di lokasi berikut</p>
                 </div>
             </div>
 
@@ -91,22 +127,24 @@ export default function Undangan () {
                         <p className='font-poppins text-white px-[30px] lg:px-0 text-sm'>Jam : 16.00 - 20.00 WIB</p>
                     </div>
                 </div>
-                <div className='lg:w-1/2 '>
-                    <div className='w-[265px] h-[84px] bg-[#D9D9D9] rounded-2xl border-4 border-[#F3A451] lg:border-[#2B1C13] mx-auto my-10 flex py-1 lg:w-[500px] lg:h-[150px]'>
-                        <div className='text-center w-full my-auto'>
-                            <p className='font-elmessiri font-bold text-4xl text-[# lg:w-1/2]'>{res2.d}</p>
-                            <p className='font-elmessiri text-xl text-[#2B1C13]'>Hari</p>
-                        </div>
-                        <div className='text-center w-full border-4 border-x-[#2B1C13] border-y-0 my-auto'>
-                            <p className='font-elmessiri font-bold text-4xl text-[#2B1C13]'>{res2.h}</p>
-                            <p className='font-elmessiri text-xl text-[#2B1C13]'>Jam</p>
-                        </div>
-                        <div className='text-center w-full my-auto'>
-                            <p className='font-elmessiri font-bold text-4xl text-[#2B1C13]'>{res2.m}</p>
-                            <p className='font-elmessiri text-xl text-[#2B1C13]'>Menit</p>
+                <div className='lg:w-1/2 lg:mr-[10%]'>
+                    <div className='lg:flex lg:justify-end'>
+                        <div className='w-[265px] h-[84px] bg-[#D9D9D9] rounded-2xl border-4 border-[#F3A451] lg:border-[#2B1C13] mx-auto my-10 flex py-1 lg:w-[500px] lg:h-[150px] lg:mx-0'>
+                            <div className='text-center w-full my-auto'>
+                                <p className='font-elmessiri font-bold text-4xl text-[# lg:w-1/2]'>{res2.d}</p>
+                                <p className='font-elmessiri text-xl text-[#2B1C13]'>Hari</p>
+                            </div>
+                            <div className='text-center w-full border-4 border-x-[#2B1C13] border-y-0 my-auto'>
+                                <p className='font-elmessiri font-bold text-4xl text-[#2B1C13]'>{res2.h}</p>
+                                <p className='font-elmessiri text-xl text-[#2B1C13]'>Jam</p>
+                            </div>
+                            <div className='text-center w-full my-auto'>
+                                <p className='font-elmessiri font-bold text-4xl text-[#2B1C13]'>{res2.m}</p>
+                                <p className='font-elmessiri text-xl text-[#2B1C13]'>Menit</p>
+                            </div>
                         </div>
                     </div>
-                    <div className='text-center lg:text-right lg:mr-[80px] '>
+                    <div className='text-center lg:text-right'>
                         <a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MGl0anVhaTRubGs0ZGt2Z2doMjJmczBkYjIgNTAyNzIxMTAzNEBtaHMuaXRzLmFjLmlk&tmsrc=5027211034%40mhs.its.ac.id">
                             <button className='bg-[#F3A451] lg:bg-[#2B1C13] shadow-md shadow-[#946a4f] text-2xl font-bold rounded-full w-[224px] h-[48px] mt-8 lg:mt-0'>
                                 <h1 className='text-[#2B1C13] lg:text-[#F3A451] font-bold '>Simpan Tanggal</h1>

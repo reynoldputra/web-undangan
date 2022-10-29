@@ -1,17 +1,31 @@
-import logo from './logo.svg';
+import { lazy, Suspense } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/home';
-import Undangan from './pages/undangan';
+const Home = lazy(() => import('./pages/home'));
+const Undangan = lazy(() => import('./pages/undangan'));
+
 
 function App() {
+  
   return (
+    <div>
+      
+
     <BrowserRouter>
       <Routes>
-        <Route path="/" index element={<Home />} />
-        <Route path="/undangan" index element={<Undangan />} />
+        <Route path="/" index element={
+          <Suspense fallback={<>...</>}>
+            <Home />
+          </Suspense>
+        } />
+        <Route path="/undangan" index element={
+          <Suspense fallback={<>...</>}>
+            <Undangan />
+          </Suspense> 
+        } />
       </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 
