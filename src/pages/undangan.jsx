@@ -57,7 +57,6 @@ export default function Undangan () {
         const modal = document.getElementById("popup-modal")
         modal.classList.add('hidden')
         BackgroundAudio.play();
-        // setPlay(true)
     }
 
 

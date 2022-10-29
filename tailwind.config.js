@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'elmessiri' : ['"El Messiri"', 'sans-serif'],
+        'elmessiri' : ['El Messiri Regular', 'sans-serif'],
         'poppins': ['Poppins', 'sans-serif'] 
       }
     },
